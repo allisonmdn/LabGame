@@ -1,0 +1,19 @@
+assets/mapa/tilesets/fundocaverna_spritesheet.png 32 32
+
+#caminhavel
+*
+11011
+11011
+00000
+
+#nivel
+*
+00000
+00000
+00000
+
+# custo adicional
+*
+00000
+00000
+00000

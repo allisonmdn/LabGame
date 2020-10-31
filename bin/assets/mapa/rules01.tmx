@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" infinite="0" nextobjectid="1">
+ <tileset firstgid="1" source="ground_set.tsx"/>
+ <tileset firstgid="1" name="fundocaverna_spritesheet" tilewidth="32" tileheight="32" tilecount="15" columns="5">
+  <image source="tilesets/fundocaverna_spritesheet.png" width="160" height="96"/>
+ </tileset>
+ <tileset firstgid="16" name="colisao" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="tilesets/colisao.png" width="32" height="32"/>
+ </tileset>
+ <layer name="region" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,1,2,0,0,0,0,0,0,0,
+0,6,7,0,0,0,0,0,0,0,
+0,0,0,0,0,0,3,4,5,0,
+0,0,0,0,0,0,8,0,10,0,
+0,0,0,0,0,0,13,14,15,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="input_Chao" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,16,16,0,0,0,0,0,0,0,
+0,16,16,0,0,0,0,0,0,0,
+0,0,0,0,0,0,16,16,16,0,
+0,0,0,0,0,0,16,0,16,0,
+0,0,0,0,0,0,16,16,16,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="output_Chao" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

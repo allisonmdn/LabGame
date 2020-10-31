@@ -1,0 +1,29 @@
+1
+sprite_sheet Coracao assets/spritesheets/item/Coracao.png 1 1
+sprite_sheet moeda assets/spritesheets/item/moeda_sheet.png 1 6
+sprite_sheet movup assets/spritesheets/item/movimentoup.png 1 1
+sprite_sheet Login assets/spritesheets/Button/Blogin.png 2 1
+sprite_sheet Voltar assets/spritesheets/Button/Bvoltar.png 2 1
+sprite_sheet Cadastrar assets/spritesheets/Button/CadastrarUsuario.png 2 1
+sprite_sheet NovoJogo assets/spritesheets/Button/NovoJogo.png 2 1
+sprite_sheet CarregarJogo assets/spritesheets/Button/CarregarJogo.png 2 1
+sprite_sheet Creditos assets/spritesheets/Button/Creditos.png 2 1
+sprite_sheet Ranking assets/spritesheets/Button/ExibirRanking.png 2 1
+sprite_sheet Sair assets/spritesheets/Button/Sair.png 2 1
+sprite_sheet Explorador1 assets/spritesheets/personagem/Explorador.png 1 3
+sprite_sheet Explorador assets/spritesheets/personagem/sExplorer.png 4 3
+sprite_sheet Minotauro assets/spritesheets/inimigo/sheet_minotauro.png 1 3
+sprite_sheet trap1 assets/spritesheets/trap/trap1.png 1 3
+sprite_sheet alavanca assets/spritesheets/alavanca/alavanca_sheet.png 4 1
+sprite_sheet gameover assets/spritesheets/gameover/gameover.png 1 3
+sprite_sheet slot assets/spritesheets/slot/slot_sheet.png 3 1
+sprite_sheet mapa assets/mapa/mapanv2.png 1 1
+sprite_sheet portal assets/mapa/portal/portal.png 1 3
+sprite_sheet visaoc assets/mapa/visao/visaocurta.png 1 1
+sprite_sheet visaog assets/mapa/visao/visaogrande.png 1 1
+sprite_sheet tesouro assets/spritesheets/powerups/treasure_box_sheet.png 4 3
+sprite_sheet lanterna assets/spritesheets/item/lanterna.png 2 1
+sprite_sheet pilha assets/spritesheets/item/pilha.png 1 1
+font fonteminec assets/fonts/Minecraft.ttf 16
+font fontehello assets/fonts/hello-world.ttf 16
+font fonte assets/fonts/fonte_padrao.ttf 16
