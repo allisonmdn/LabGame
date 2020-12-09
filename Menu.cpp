@@ -153,7 +153,7 @@ bool Menu::cadastrar()
 		inserir.atualizar();
 		inserir.desenhar();
 	}
-
+	//CADASTRANDO
 	if (!gTeclado.soltou[TECLA_ENTER])
 	{
 		if (gTeclado.inputTexto.estaHabilitado() && login.empty())
@@ -208,7 +208,6 @@ bool Menu::cadastrar()
 	if (!senha.empty() && !csenha.empty() && csenha != senha)
 	{
 
-
 		//Se a senha secundária é diferente da primária.
 
 		gGraficos.desenharTexto("APERTE [DELETE] PARA DIGITAR NOVAMENTE A SENHA", gJanela.getLargura() / 2, gJanela.getAltura() / 4, 255, 255, 255, 255);
@@ -227,45 +226,109 @@ bool Menu::cadastrar()
 		if (csenha == senha && !csenha.empty())
 		{
 			conta->senha = csenha;
-			texto.setString("REGISTRADO COM SUCESSO!");
-			accs.push_back(conta);
-			texto.desenhar(gJanela.getLargura() / 2, gJanela.getAltura() / 2);
+			
+			conta->score = 0;
+			
+			//o_archivos.open("../Registro.bin", std::ios::binary | std::ios::app);
+			
 
-			/*if (opacidade > 0)
+			i_archivos.open("../Registro.txt", std::ios::in);
+
+			accs.clear();//Limpar vetor de contas.
+						
+
+			if (!i_archivos.fail())
 			{
-				texto.setCorAlpha(opacidade, true);
-																	 
-				opacidade--;
-			}*/
+				while (!i_archivos.eof())
+				{
+					Account* accConfirm = new Account();
 
-			o_archivos.open("../Registro.bin", std::ios::binary | std::ios::app);
+					i_archivos >> accConfirm->username >> accConfirm->senha;
 
-			if (!o_archivos.is_open())
+
+					accs.push_back(accConfirm);
+				}
+
+				i_archivos.close();//Fechar arquivo.
+								
+			}		
+			if (accs.size() > 0)
 			{
+				for (int i = 0; i < accs.size(); i++)
+				{
+					if (conta->username == accs.at(i)->username)
+					{
+						gGraficos.desenharTexto("APERTE [ENTER] PARA CRIAR NOVAMENTE!", gJanela.getLargura() / 2, gJanela.getAltura() / 4, 255, 255, 255, 255);
+						texto.setString("USUARIO JÁ EXISTE!");
+						texto.desenhar(gJanela.getLargura() / 2, gJanela.getAltura() / 2);
 
-				gDebug.depurar("Erro ao abrir registro(Cadastro)", o_archivos.fail());
+						if (gTeclado.soltou[TECLA_ENTER])
+						{
+							login.clear();
+							conta->username.clear();
+							senha.clear();
+							conta->senha.clear();
+							csenha.clear();
+						}
+																	
+						
+					}
+				}
+			}			
+			if (!conta->username.empty() && !conta->senha.empty())
+			{
+				archivos.open("../Score.txt", std::ios::out | std::ios::app);
+
+				texto.setString("REGISTRADO COM SUCESSO!");
+
+				texto.desenhar(gJanela.getLargura() / 2, gJanela.getAltura() / 2);
+
+				o_archivos.open("../Registro.txt", std::ios::app);
+
+				//Score
+				if (!archivos.is_open())
+				{
+					gDebug.depurar("Erro ao abrir score", archivos.fail());
+				}
+				else
+				{
+					archivos << conta->username << " " << conta->score;
+					archivos << std::endl;
+
+				}
+				//Fecha arquivo.
+				archivos.close();
+
+				//Registro
+				if (!o_archivos.is_open())
+				{
+
+					gDebug.depurar("Erro ao abrir registro(Cadastro)", o_archivos.fail());
+				}
+				else
+				{
+					//o_archivos.write(reinterpret_cast<const char *>(conta), sizeof(Account));
+
+					o_archivos << conta->username << " " << conta->senha;
+
+					o_archivos << std::endl;
+
+					op = TELAPRINCIPAL;
+
+					//conta->username.clear();
+					//conta->senha.clear();
+
+					o_archivos.close();//Fecha arquivo.
+
+					return true;
+				}
 			}
-			else
-			{
-				o_archivos.write(reinterpret_cast<const char *>(conta), sizeof(Account));
-				//archivos << conta->username << " " << conta->senha;
-				o_archivos << std::endl; 			
-
-				op = TELAPRINCIPAL;
-
-				//conta->username.clear();
-				//conta->senha.clear(); 			
-				return true;
-			}
-			//Fecha arquivo.
-			o_archivos.close();
+					
 			
 		}
 	}
 	
-
-	return false;
-	
+	return false;	
 
 }
 
@@ -285,16 +348,27 @@ bool Menu::logIn()
 	
 	botaoVoltar.atualizar();
 	botaoVoltar.desenhar();
-/*
-	i_archivos.open("../Registro.bin", std::ios::in | std::ios::binary);
+
+	//i_archivos.open("../Registro.bin", std::ios::in | std::ios::binary);
 	
+	i_archivos.open("../Registro.txt", std::ios::in);
+
+	accs.clear();
+
 	while (!i_archivos.eof())
-	{
-		i_archivos.read(reinterpret_cast<char *>(&conta), sizeof(Account));
-		accs.push_back(conta);
+	{		
+		//i_archivos.read(reinterpret_cast<char *>(conta), sizeof(Account));		
+		Account* accConfirm = new Account();
+
+		i_archivos >> accConfirm->username >> accConfirm->senha;
+		
+		accs.push_back(accConfirm);	
+
+		archivos << std::endl;
 	}
-	i_archivos.close();*/
-	
+	i_archivos.close();
+		
+
 	if (!gTeclado.inputTexto.estaHabilitado())
 	{
 		//Set fonte, inicializa a string e habilita a digitação.
@@ -312,7 +386,7 @@ bool Menu::logIn()
 		inserir.desenhar();
 	}
 
-	if (!gTeclado.soltou[TECLA_ENTER] && login.empty()|| !gTeclado.soltou[TECLA_ENTER] && senha.empty())
+	if (!gTeclado.soltou[TECLA_ENTER] && login.empty() || !gTeclado.soltou[TECLA_ENTER] && senha.empty())
 	{
 		if (gTeclado.inputTexto.estaHabilitado() && login.empty())
 		{
@@ -329,11 +403,11 @@ bool Menu::logIn()
 	if (gTeclado.soltou[TECLA_ENTER])
 	{					
 
-		if (login.empty()) //Se variável string vazia.
+		if (login.empty()) //Se variável string vaz	ia.
 		{
 
 			login = gTeclado.inputTexto.getString(); //Recebe texto digitado.
-
+			conta->username = login;
 			gTeclado.inputTexto.apagarTudo();
 
 			senha.clear(); //Limpar campos subsequentes.
@@ -345,14 +419,26 @@ bool Menu::logIn()
 			if (senha.empty() && !login.empty())
 			{
 				senha = gTeclado.inputTexto.getString();
+				conta->senha = senha;
 				gTeclado.inputTexto.apagarTudo();
 			}
 
 			gDebug.depurar("login: ", login);
 			gDebug.depurar("senha: ", senha);
 
+			for (int i = 0; i < accs.size(); i++)
+			{
+				if (login == accs.at(i)->username)
+				{
+					conta->username = login;
+					conta->senha = accs.at(i)->senha;
+
+					continue;
+				}				
+			}
+
 			gDebug.depurar("usuário cadastrado: ", conta->username);
-			gDebug.depurar("senha cadastrada: ", conta->senha);
+			gDebug.depurar("senha correta cadastrada: ", conta->senha);
 
 		} 		
 
@@ -360,43 +446,58 @@ bool Menu::logIn()
 	
 	if (!login.empty() && !senha.empty())
 	{
-
-		if (login != conta->username)
+		for (int i = 0; i < accs.size(); i++)
 		{
-			gGraficos.desenharTexto("APERTE [DELETE] PARA DIGITAR O LOGIN", gJanela.getLargura() / 2, gJanela.getAltura() / 4, 255, 255, 255, 255);
-
-			texto.setString("CONTA NÃO EXISTE!");
-
-			texto.desenhar(gJanela.getLargura() / 2, gJanela.getAltura() / 2);
-
-			if (gTeclado.soltou[TECLA_DELETE])
+			if (login != accs.at(i)->username && i == accs.size() - 1)
 			{
-				login.clear();
+				gGraficos.desenharTexto("APERTE [DELETE] PARA DIGITAR O LOGIN", gJanela.getLargura() / 2, gJanela.getAltura() / 4, 255, 255, 255, 255);
+
+				texto.setString("CONTA NÃO EXISTE!");
+
+				texto.desenhar(gJanela.getLargura() / 2, gJanela.getAltura() / 2);
+
+				if (gTeclado.soltou[TECLA_DELETE])
+				{
+					login.clear();		
+					conta->username.clear();
+					
+				}
+				
 			}
-		}
-		else if (senha != conta->senha)
-		{
-			gGraficos.desenharTexto("APERTE [DELETE] PARA DIGITAR NOVAMENTE A SENHA", gJanela.getLargura() / 2, gJanela.getAltura() / 4, 255, 255, 255, 255);
+			else
+			{ 
+				if (senha != accs.at(i)->senha && i == accs.size() - 1)
+				{
+					gGraficos.desenharTexto("APERTE [DELETE] PARA DIGITAR NOVAMENTE A SENHA", gJanela.getLargura() / 2, gJanela.getAltura() / 4, 255, 255, 255, 255);
 
-			texto.setString("SENHA INCORRETA!");
+					texto.setString("SENHA INCORRETA!");
 
-			texto.desenhar(gJanela.getLargura() / 2, gJanela.getAltura() / 2);
+					texto.desenhar(gJanela.getLargura() / 2, gJanela.getAltura() / 2);
 
-			if (gTeclado.soltou[TECLA_DELETE])
-			{
-				senha.clear();
+					if (gTeclado.soltou[TECLA_DELETE])
+					{
+						conta->senha.clear();
+						senha.clear();
+					}
+
+				}
+
+				if (login == accs.at(i)->username && senha == accs.at(i)->senha)
+				{
+					op = TELAPRINCIPAL;
+
+					login.clear();
+					senha.clear();					
+
+					return true;
+				}
 			}
+	
+	
 
+			
 		}
-		else
-		{
-
-			op = TELAPRINCIPAL;
-			login.clear();
-			senha.clear();
-
-			return true;  
-		}
+		
 	}  	
 	
 	return false;

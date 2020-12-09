@@ -68,7 +68,7 @@ private:
 	BotaoSprite * slot = new BotaoSprite[3];	
 ;
 	std::stack<int> menu; //Empilhar menu.
-	std::vector<Account*> accs;
+	std::vector<Account*> accs;	
 	//std::vector<Account*> scores;
 	//std::vector<Account*>::iterator it;
 	Account * conta = new Account;
